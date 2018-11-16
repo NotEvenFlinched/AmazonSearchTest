@@ -3,14 +3,16 @@ package amazon.search.autotest.tests;
 import amazon.search.autotest.pages.AmazonMainPage;
 import amazon.search.autotest.pages.AmazonSearchResultsPage;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class AmazonSearchTest {
@@ -21,6 +23,13 @@ public class AmazonSearchTest {
     @BeforeClass
     @Parameters("browser")
     public void setup(String browser) throws Exception {
+        URL server = new URL("http://127.0.0.1:4444/wd/hub");
+
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setBrowserName("chrome");
+
+        System.out.println("Connecting to " + server);
+
         //Check if parameter passed from TestNG is 'Firefox'
         if (browser.equalsIgnoreCase("firefox")) {
             //create firefox instance
@@ -31,7 +40,7 @@ public class AmazonSearchTest {
         else if (browser.equalsIgnoreCase("chrome")) {
             //create chrome instance
             System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\chromedriver_win32\\chromedriver.exe");
-            driver = new ChromeDriver();
+            driver = new RemoteWebDriver(server, capabilities);
         }
         //Check if parameter passed as 'Edge'
         else if (browser.equalsIgnoreCase("edge")) {
@@ -50,13 +59,13 @@ public class AmazonSearchTest {
     }
 
     @Test
-    @Parameters({"searchQuerry","bookToSearch"})
+    @Parameters({"searchQuerry", "bookToSearch"})
     public void searchTest(String searchQuerry, String bookToSearch) {
         amazonMainPage.inputQuerry(searchQuerry);
         amazonMainPage.clickSearchButton();
 
         amazonSearchResultsPage.getBooksInfo();
-//        amazonSearchResultsPage.checkBookAvailable(bookToSearch);
+        amazonSearchResultsPage.checkBookAvailable(bookToSearch);
     }
 
     @AfterClass
