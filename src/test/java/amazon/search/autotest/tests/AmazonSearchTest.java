@@ -59,12 +59,11 @@ public class AmazonSearchTest {
     }
 
     @Test
-    @Parameters({"searchQuerry", "bookToSearch"})
-    public void searchTest(String searchQuerry, String bookToSearch) {
-        amazonMainPage.inputQuerry(searchQuerry);
+    @Parameters({"searchTip", "bookToSearch"})
+    public void searchTest(String searchTip, String bookToSearch) {
+        amazonMainPage.inputTip(searchTip);
         amazonMainPage.clickSearchButton();
 
-        amazonSearchResultsPage.getBooksInfo();
         amazonSearchResultsPage.checkBookAvailable(bookToSearch);
     }
 
