@@ -3,10 +3,10 @@ package amazon.search.autotest.tests;
 import amazon.search.autotest.pages.AmazonMainPage;
 import amazon.search.autotest.pages.AmazonSearchResultsPage;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -40,7 +40,8 @@ public class AmazonSearchTest {
         else if (browser.equalsIgnoreCase("chrome")) {
             //create chrome instance
             System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\chromedriver_win32\\chromedriver.exe");
-            driver = new RemoteWebDriver(server, capabilities);
+//            driver = new RemoteWebDriver(server, capabilities);
+            driver = new ChromeDriver();
         }
         //Check if parameter passed as 'Edge'
         else if (browser.equalsIgnoreCase("edge")) {
@@ -63,7 +64,6 @@ public class AmazonSearchTest {
     public void searchTest(String searchTip, String bookToSearch) {
         amazonMainPage.inputTip(searchTip);
         amazonMainPage.clickSearchButton();
-
         amazonSearchResultsPage.checkBookAvailable(bookToSearch);
     }
 

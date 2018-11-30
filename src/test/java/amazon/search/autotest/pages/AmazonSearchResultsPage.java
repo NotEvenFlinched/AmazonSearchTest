@@ -4,8 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,7 @@ public class AmazonSearchResultsPage {
         this.driver = driver;
     }
 
-    private WebDriver driver;
+    public WebDriver driver;
 
     public void checkBookAvailable(String bookTitle) {
         boolean isAvailable = false;
@@ -32,7 +30,7 @@ public class AmazonSearchResultsPage {
     public List<String> getBooksTitles() {
         List<String> bookTitles = new ArrayList<>();
 
-        List<WebElement> bookTitleElements = new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("ul#s-results-list-atf h2.a-size-medium.s-inline.s-access-title.a-text-normal")));
+        List<WebElement> bookTitleElements = driver.findElements(By.xpath("//h2"));
         for (WebElement bookTitle : bookTitleElements) {
             bookTitles.add(bookTitle.getText());
         }
@@ -41,7 +39,7 @@ public class AmazonSearchResultsPage {
 
     public List<String> getBooksAuthors() {
         List<String> authorNames = new ArrayList<>();
-        List<WebElement> authorNameElements = new WebDriverWait(driver, 20).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.cssSelector("ul#s-results-list-atf span.a-size-small.a-color-secondary>a.a-link-normal.a-text-normal")));
+        List<WebElement> authorNameElements = driver.findElements(By.xpath("//span[contains(@class,'a-size-small')]//a[(contains(@class,'a-text-normal')) and not (contains(@class,'a-size-small'))]"));
         for (WebElement authorName : authorNameElements) {
             authorNames.add(authorName.getText());
         }
