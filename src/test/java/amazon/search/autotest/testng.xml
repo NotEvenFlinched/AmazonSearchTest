@@ -3,7 +3,7 @@
 
 <suite name="TestSuite" thread-count="2" parallel="false">
 
-    <parameter name="searchTip" value="Java"/>
+    <parameter name="searchTerm" value="Java"/>
     <parameter name="bookToSearch" value="Head First Java, 2nd Edition"/>
 
     <test name="ChromeTest">

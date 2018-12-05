@@ -19,8 +19,8 @@ public class AmazonMainPage {
     @FindBy(className = "nav-input")
     private WebElement searchButton;
 
-    public void inputTip(String bookToSearch) {
-        searchField.sendKeys(bookToSearch);
+    public void inputSearchTerm(String bookSearchTerm) {
+        searchField.sendKeys(bookSearchTerm);
     }
 
     public void clickSearchButton() {

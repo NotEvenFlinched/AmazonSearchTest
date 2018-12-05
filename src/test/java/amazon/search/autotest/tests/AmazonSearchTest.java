@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -28,30 +29,24 @@ public class AmazonSearchTest {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setBrowserName("chrome");
 
-        System.out.println("Connecting to " + server);
+        switch (browser.toLowerCase()) {
+            case "firefox":
+                System.setProperty("webdriver.gecko.driver", "lib/geckodriver.exe");
+                driver = new FirefoxDriver();
+                break;
+            case "chrome":
+//                driver = new RemoteWebDriver(server, capabilities);
+                System.setProperty("webdriver.chrome.driver", "lib/chromedriver.exe");
+                driver = new ChromeDriver();
+                break;
+            case "edge":
+                System.setProperty("webdriver.edge.driver", "lib/MicrosoftWebDriver.exe");
+                driver = new EdgeDriver();
+                break;
+            default:
+                throw new Exception("Browser is not correct");
+        }
 
-        //Check if parameter passed from TestNG is 'Firefox'
-        if (browser.equalsIgnoreCase("firefox")) {
-            //create firefox instance
-            System.setProperty("webdriver.gecko.driver", "C:\\Program Files\\geckodriver-v0.23.0-win64\\geckodriver.exe");
-            driver = new FirefoxDriver();
-        }
-        //Check if parameter passed as 'Chrome'
-        else if (browser.equalsIgnoreCase("chrome")) {
-            //create chrome instance
-            System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\chromedriver_win32\\chromedriver.exe");
-//            driver = new RemoteWebDriver(server, capabilities);
-            driver = new ChromeDriver();
-        }
-        //Check if parameter passed as 'Edge'
-        else if (browser.equalsIgnoreCase("edge")) {
-            //create edge instance
-            System.setProperty("webdriver.edge.driver", "C:\\Program Files\\MicrosoftWebDriver\\MicrosoftWebDriver.exe");
-            driver = new EdgeDriver();
-        } else {
-            //If no browser passed throw exception
-            throw new Exception("Browser is not correct");
-        }
         amazonMainPage = new AmazonMainPage(driver);
         amazonSearchResultsPage = new AmazonSearchResultsPage(driver);
         driver.manage().window().maximize();
@@ -60,9 +55,9 @@ public class AmazonSearchTest {
     }
 
     @Test
-    @Parameters({"searchTip", "bookToSearch"})
-    public void searchTest(String searchTip, String bookToSearch) {
-        amazonMainPage.inputTip(searchTip);
+    @Parameters({"searchTerm", "bookToSearch"})
+    public void searchTest(String searchTerm, String bookToSearch) {
+        amazonMainPage.inputSearchTerm(searchTerm);
         amazonMainPage.clickSearchButton();
         amazonSearchResultsPage.checkBookAvailable(bookToSearch);
     }
