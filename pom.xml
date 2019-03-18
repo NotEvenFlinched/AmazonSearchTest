@@ -45,7 +45,7 @@
 
                     <suiteXmlFiles>
                         <suiteXmlFile>
-                            C:\Users\user\IdeaProjects\AmazonSearchTest\src\test\java\amazon\search\autotest\testng.xml
+                            src\test\java\amazon\search\autotest\testng.xml
                         </suiteXmlFile>
                     </suiteXmlFiles>
 

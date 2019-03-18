@@ -7,7 +7,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
@@ -17,9 +16,9 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class AmazonSearchTest {
-    public static WebDriver driver;
-    public static AmazonMainPage amazonMainPage;
-    public static AmazonSearchResultsPage amazonSearchResultsPage;
+    private static WebDriver driver;
+    private static AmazonMainPage amazonMainPage;
+    private static AmazonSearchResultsPage amazonSearchResultsPage;
 
     @BeforeClass
     @Parameters("browser")
@@ -50,7 +49,7 @@ public class AmazonSearchTest {
         amazonMainPage = new AmazonMainPage(driver);
         amazonSearchResultsPage = new AmazonSearchResultsPage(driver);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("https://www.amazon.com");
     }
 

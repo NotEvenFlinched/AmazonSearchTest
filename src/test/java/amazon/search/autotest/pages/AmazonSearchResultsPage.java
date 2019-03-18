@@ -15,10 +15,10 @@ public class AmazonSearchResultsPage {
         this.driver = driver;
     }
 
-    public WebDriver driver;
+    private WebDriver driver;
     private final String booksTitlesLocator = "//h2";
     private final String booksAuthorsLocator = "//span[contains(@class,'a-size-small')]//a[(contains(@class,'a-text-normal')) and not (contains(@class,'a-size-small'))]";
-    private final String booksPriceLocator = "(//li[@id='result_%s']//a/span[@class='a-offscreen'])[1]";
+    private final String booksPriceLocator = "//li[@id='result_%s']//a/span[@class='a-offscreen']";
     private final String booksRatingLocator = "//li[@id='result_%s']//span[@class='a-icon-alt']";
     private final String isBestSellerLocator = "//li[@id='result_%s']//div[(contains(@class,'a-row')) and (contains(@class,'a-spacing-micro'))]";
     private final String booksCountLocator = "//li[contains(@id,'result_')]";
@@ -61,6 +61,7 @@ public class AmazonSearchResultsPage {
         for (int i = 0; i < booksCount; i++) {
             WebElement bookPriceElement = driver.findElement(By.xpath(String.format(booksPriceLocator, i)));
             bookPrices.add(bookPriceElement.getAttribute("innerHTML"));
+            System.out.println(bookPriceElement.getAttribute("innerHTML"));
         }
         return bookPrices;
     }

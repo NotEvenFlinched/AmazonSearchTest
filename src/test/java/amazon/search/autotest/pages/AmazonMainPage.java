@@ -11,7 +11,7 @@ public class AmazonMainPage {
         this.driver = driver;
     }
 
-    public WebDriver driver;
+    private WebDriver driver;
 
     @FindBy(id = "twotabsearchtextbox")
     private WebElement searchField;
@@ -26,5 +26,4 @@ public class AmazonMainPage {
     public void clickSearchButton() {
         searchButton.click();
     }
-
 }
